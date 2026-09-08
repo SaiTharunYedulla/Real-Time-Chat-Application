@@ -351,62 +351,75 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   return (
-    <>
+    <Box display="flex" flexDirection="column" w="100%" h="100%">
       {selectedChat ? (
         <>
           <Text
-            fontSize={{ base: "28px", md: "30px" }}
+            fontSize={{ base: "xl", md: "2xl" }}
+            fontWeight="700"
             pb={3}
             px={2}
             w="100%"
-            fontFamily="Work sans"
+            color="#F8FAFC"
             display="flex"
             justifyContent={{ base: "space-between" }}
             alignItems="center"
           >
             <IconButton
-              display={{ base: "flex" }}
-              icon={<ArrowBackIcon />}
+              display={{ base: "flex", md: "none" }}
+              icon={<ArrowBackIcon color="#94A3B8" />}
               onClick={() => setSelectedChat("")}
+              variant="ghost"
+              borderRadius="full"
+              _hover={{ bg: "rgba(255, 255, 255, 0.1)", color: "white" }}
             />
             {messages &&
               (!selectedChat.isGroupChat ? (
-                <>
-                  {getSender(user, selectedChat.users)}
-                  <ProfileModal
-                    user={getSenderFull(user, selectedChat.users)}
-                  />
-                </>
+                <Box display="flex" alignItems="center" gap={3}>
+                  <Box w="10px" h="10px" borderRadius="full" bg="#10B981" className="online-pulse" />
+                  <Text color="#F8FAFC" fontWeight="700" fontSize="lg">
+                    {getSender(user, selectedChat.users)}
+                  </Text>
+                  <ProfileModal user={getSenderFull(user, selectedChat.users)} />
+                </Box>
               ) : (
-                <>
-                  {selectedChat.chatName.toUpperCase()}
+                <Box display="flex" alignItems="center" gap={3}>
+                  <Box w="10px" h="10px" borderRadius="full" bg="#6366F1" />
+                  <Text color="#F8FAFC" fontWeight="700" fontSize="lg">
+                    {selectedChat.chatName}
+                  </Text>
                   <UpdateGroupChatModal
                     fetchMessages={fetchMessages}
                     fetchAgain={fetchAgain}
                     setFetchAgain={setFetchAgain}
                   />
-                </>
+                </Box>
               ))}
           </Text>
+
           <Box
             display="flex"
             flexDir="column"
             justifyContent="flex-end"
-            p={3}
-            bg="#E8E8E8"
+            p={4}
+            bg="rgba(10, 15, 26, 0.5)"
             w="100%"
             h="100%"
-            borderRadius="lg"
+            borderRadius="20px"
+            border="1px solid rgba(255, 255, 255, 0.05)"
             overflowY="hidden"
           >
             <Box display="flex" justifyContent="flex-end" mb={2}>
-              <Tooltip label="Check for scheduled messages" placement="top">
+              <Tooltip label="Sync latest messages" placement="top">
                 <IconButton
-                  size="sm"
+                  size="xs"
                   icon={<i className="fas fa-sync-alt"></i>}
                   onClick={fetchMessages}
                   aria-label="Refresh messages"
-                  colorScheme="blue"
+                  variant="ghost"
+                  color="#94A3B8"
+                  borderRadius="full"
+                  _hover={{ bg: "rgba(255, 255, 255, 0.1)", color: "#F8FAFC" }}
                 />
               </Tooltip>
             </Box>
@@ -414,8 +427,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {loading ? (
               <Spinner
                 size="xl"
-                w={20}
-                h={20}
+                w={14}
+                h={14}
+                color="#6366F1"
                 alignSelf="center"
                 margin="auto"
               />
@@ -442,28 +456,44 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <></>
               )}
-              <Box display="flex" alignItems="center">
+              <Box display="flex" alignItems="center" gap={2}>
                 <Input
-                  variant="filled"
-                  bg="#E0E0E0"
-                  placeholder="Enter a message.."
+                  variant="unstyled"
+                  bg="rgba(15, 23, 42, 0.8)"
+                  border="1px solid rgba(255, 255, 255, 0.1)"
+                  borderRadius="full"
+                  px={5}
+                  py={3}
+                  fontSize="sm"
+                  color="#F8FAFC"
+                  placeholder="Type a message..."
                   value={newMessage}
                   onChange={typingHandler}
-                  style={{ marginRight: "10px" }}
+                  _placeholder={{ color: "#64748B" }}
+                  _focus={{
+                    border: "1px solid #6366F1",
+                    boxShadow: "0 0 15px rgba(99, 102, 241, 0.3)",
+                  }}
+                  transition="all 0.2s ease"
                 />
+
                 <Popover placement="top">
                   <PopoverTrigger>
                     <IconButton
-                      colorScheme="blue"
+                      borderRadius="full"
+                      bg="rgba(255, 255, 255, 0.08)"
+                      color="#94A3B8"
                       aria-label="Schedule message"
-                      icon={<CalendarIcon />}
-                      style={{ marginRight: "10px" }}
+                      icon={<CalendarIcon fontSize="sm" />}
+                      _hover={{ bg: "rgba(99, 102, 241, 0.25)", color: "#F8FAFC" }}
                     />
                   </PopoverTrigger>
-                  <PopoverContent width="300px">
-                    <PopoverArrow />
-                    <PopoverCloseButton />
-                    <PopoverHeader>Schedule your message</PopoverHeader>
+                  <PopoverContent width="300px" bg="rgba(15, 23, 42, 0.95)" borderColor="rgba(255, 255, 255, 0.1)">
+                    <PopoverArrow bg="rgba(15, 23, 42, 0.95)" />
+                    <PopoverCloseButton color="#94A3B8" />
+                    <PopoverHeader borderBottomColor="rgba(255, 255, 255, 0.08)" color="#F8FAFC" fontWeight="700" fontSize="xs">
+                      Schedule Message Delivery
+                    </PopoverHeader>
                     <PopoverBody>
                       <Box display="flex" flexDirection="column">
                         <DatePicker
@@ -481,7 +511,23 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     </PopoverBody>
                   </PopoverContent>
                 </Popover>
-                <Button colorScheme="blue" onClick={sendMessage}>
+
+                <Button
+                  borderRadius="full"
+                  bg="linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)"
+                  color="white"
+                  px={6}
+                  fontWeight="700"
+                  fontSize="xs"
+                  _hover={{
+                    bg: "linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)",
+                    boxShadow: "0 4px 15px rgba(99, 102, 241, 0.4)",
+                    transform: "translateY(-1px)",
+                  }}
+                  _active={{ transform: "translateY(0)" }}
+                  onClick={sendMessage}
+                  transition="all 0.2s ease"
+                >
                   Send
                 </Button>
               </Box>
@@ -489,14 +535,37 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </Box>
         </>
       ) : (
-        // to get socket.io on same page
-        <Box d="flex" alignItems="center" justifyContent="center" h="100%">
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
-            Click on a user to start chatting
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          h="100%"
+          w="100%"
+          opacity={0.8}
+        >
+          <Box
+            w="64px"
+            h="64px"
+            borderRadius="full"
+            bg="rgba(99, 102, 241, 0.15)"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            mb={4}
+            border="1px solid rgba(99, 102, 241, 0.3)"
+          >
+            <i className="far fa-comments" style={{ fontSize: "24px", color: "#A5B4FC" }}></i>
+          </Box>
+          <Text fontSize="lg" fontWeight="700" color="#F8FAFC">
+            Select a Workspace Conversation
+          </Text>
+          <Text fontSize="xs" color="#94A3B8" mt={1}>
+            Choose a contact or group from the list to start messaging
           </Text>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 

@@ -266,71 +266,93 @@ const ScrollableChat = ({ messages }) => {
       )}
       
       {messages &&
-        messages.map((m, i) => (
-          <div key={m._id} style={{ display: "flex" }}>
-            {(isSameSender(messages, m, i, user._id) ||
-              isLastMessage(messages, i, user._id)) && (
-              <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
-                <Avatar
-                  mt="7px"
-                  mr={1}
-                  size="sm"
-                  cursor="pointer"
-                  name={m.sender.name}
-                  src={m.sender.pic}
-                />
-              </Tooltip>
-            )}
-            <span
-              style={{
-                backgroundColor: `${
-                  m.sender._id === user._id ? "#BEE3F8" : "#B9F5D0"
-                }`,
-                color: m.isScheduledMessage ? "gray.600" : "black",
-                borderRadius: "20px",
-                padding: "5px 15px",
-                maxWidth: "75%",
-                marginLeft: isSameSenderMargin(messages, m, i, user._id),
-                marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,
-                fontStyle: m.isScheduledMessage ? "italic" : "normal",
-              }}
-            >
-              {translatedMessages[m._id] || m.content}
-              
-              {/* Translation menu */}
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  size="xs"
-                  colorScheme="blue"
-                  variant="ghost"
-                  ml={2}
-                >
-                  Translate
-                </MenuButton>
-                <MenuList>
-                  {translatedMessages[m._id] && (
-                    <MenuItem onClick={() => resetTranslation(m._id)}>
-                      Original
-                    </MenuItem>
-                  )}
-                  {languages.map((lang) => (
-                    <MenuItem
-                      key={lang.code}
-                      onClick={() => translateMessage(m._id, m.content, lang.name)}
-                      isDisabled={isLanguageLoading(m._id, lang.name)}
-                    >
-                      {isLanguageLoading(m._id, lang.name) ? (
-                        <Spinner size="xs" mr={2} />
-                      ) : null}
-                      {lang.name}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
-            </span>
-          </div>
-        ))}
+        messages.map((m, i) => {
+          const isUser = m.sender._id === user._id;
+          return (
+            <div key={m._id} style={{ display: "flex", alignItems: "flex-end" }}>
+              {(isSameSender(messages, m, i, user._id) ||
+                isLastMessage(messages, i, user._id)) && (
+                <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
+                  <Avatar
+                    mt="7px"
+                    mr={2}
+                    size="sm"
+                    cursor="pointer"
+                    name={m.sender.name}
+                    src={m.sender.pic}
+                    border="1px solid rgba(255, 255, 255, 0.2)"
+                  />
+                </Tooltip>
+              )}
+              <span
+                style={{
+                  background: isUser
+                    ? "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)"
+                    : "rgba(30, 41, 59, 0.8)",
+                  color: isUser ? "#FFFFFF" : "#F1F5F9",
+                  border: isUser ? "none" : "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: isUser ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
+                  padding: "8px 16px",
+                  maxWidth: "75%",
+                  marginLeft: isSameSenderMargin(messages, m, i, user._id),
+                  marginTop: isSameUser(messages, m, i, user._id) ? 4 : 12,
+                  fontStyle: m.isScheduledMessage ? "italic" : "normal",
+                  fontSize: "14px",
+                  lineHeight: "1.5",
+                  boxShadow: isUser
+                    ? "0 4px 15px rgba(99, 102, 241, 0.3)"
+                    : "0 4px 15px rgba(0, 0, 0, 0.2)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "8px",
+                }}
+              >
+                <span>{translatedMessages[m._id] || m.content}</span>
+                
+                {/* Translation menu */}
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    size="xs"
+                    variant="unstyled"
+                    px={2}
+                    py={0.5}
+                    height="auto"
+                    fontSize="10px"
+                    fontWeight="600"
+                    color={isUser ? "rgba(255, 255, 255, 0.8)" : "#94A3B8"}
+                    borderRadius="full"
+                    bg={isUser ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.06)"}
+                    _hover={{ bg: "rgba(255, 255, 255, 0.25)", color: "#FFFFFF" }}
+                  >
+                    🌐
+                  </MenuButton>
+                  <MenuList bg="rgba(15, 23, 42, 0.95)" borderColor="rgba(255, 255, 255, 0.1)">
+                    {translatedMessages[m._id] && (
+                      <MenuItem fontSize="xs" onClick={() => resetTranslation(m._id)}>
+                        Original
+                      </MenuItem>
+                    )}
+                    {languages.map((lang) => (
+                      <MenuItem
+                        key={lang.code}
+                        fontSize="xs"
+                        onClick={() => translateMessage(m._id, m.content, lang.name)}
+                        isDisabled={isLanguageLoading(m._id, lang.name)}
+                      >
+                        {isLanguageLoading(m._id, lang.name) ? (
+                          <Spinner size="xs" mr={2} color="#6366F1" />
+                        ) : null}
+                        {lang.name}
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
+              </span>
+            </div>
+          );
+        })}
 
       {/* Invisible element at the bottom for scrolling */}
       <div ref={messagesEndRef} style={{ height: "1px" }} />

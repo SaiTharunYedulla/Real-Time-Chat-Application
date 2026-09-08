@@ -127,36 +127,83 @@ function SideDrawer() {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
+        bg="rgba(15, 23, 42, 0.75)"
+        backdropFilter="blur(20px)"
         w="100%"
-        p="5px 10px 5px 10px"
-        borderWidth="5px"
+        px={{ base: 3, md: 6 }}
+        py={2.5}
+        borderBottom="1px solid rgba(255, 255, 255, 0.08)"
+        boxShadow="0 10px 30px rgba(0, 0, 0, 0.4)"
       >
-        <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen}>
-            <i className="fas fa-search"></i>
-            <Text display={{ base: "none", md: "flex" }} px={4}>
-              Search User
+        <Tooltip label="Search Users to Chat" hasArrow placement="bottom-end">
+          <Button
+            variant="unstyled"
+            onClick={onOpen}
+            display="flex"
+            alignItems="center"
+            bg="rgba(10, 15, 26, 0.6)"
+            border="1px solid rgba(255, 255, 255, 0.1)"
+            borderRadius="full"
+            px={4}
+            py={1.5}
+            h="38px"
+            color="#94A3B8"
+            _hover={{
+              border: "1px solid rgba(99, 102, 241, 0.4)",
+              color: "#F8FAFC",
+              bg: "rgba(15, 23, 42, 0.8)",
+            }}
+            transition="all 0.2s ease"
+          >
+            <i className="fas fa-search" style={{ fontSize: "14px", marginRight: "8px" }}></i>
+            <Text display={{ base: "none", md: "flex" }} fontSize="xs" fontWeight="600">
+              Search workspace users...
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans">
+
+        <Text
+          fontSize={{ base: "xl", md: "2xl" }}
+          fontWeight="800"
+          letterSpacing="-0.02em"
+          className="gradient-text"
+        >
           Talk-A-Tive
         </Text>
-        <div>
+
+        <Box display="flex" alignItems="center" gap={3}>
           <Menu>
-            <MenuButton p={1}>
+            <MenuButton
+              p={2}
+              position="relative"
+              borderRadius="full"
+              bg="rgba(255, 255, 255, 0.05)"
+              _hover={{ bg: "rgba(255, 255, 255, 0.1)" }}
+              transition="all 0.2s ease"
+            >
               <NotificationBadge
                 count={notification.length}
                 effect={Effect.SCALE}
+                style={{
+                  backgroundColor: "#6366F1",
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                }}
               />
-              <BellIcon fontSize="2xl" m={1} />
+              <BellIcon fontSize="xl" color="#CBD5E1" />
             </MenuButton>
-            <MenuList pl={2}>
-              {!notification.length && "No New Messages"}
+            <MenuList p={2} bg="rgba(15, 23, 42, 0.95)" borderColor="rgba(255, 255, 255, 0.1)">
+              {!notification.length && (
+                <Text p={2} fontSize="xs" color="#94A3B8">
+                  No New Messages
+                </Text>
+              )}
               {notification.map((notif) => (
                 <MenuItem
                   key={notif._id}
+                  borderRadius="10px"
+                  fontSize="xs"
+                  py={2}
                   onClick={() => {
                     setSelectedChat(notif.chat);
                     setNotification(notification.filter((n) => n !== notif));
@@ -169,39 +216,73 @@ function SideDrawer() {
               ))}
             </MenuList>
           </Menu>
+
           <Menu>
-            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
+            <MenuButton
+              as={Button}
+              variant="ghost"
+              rightIcon={<ChevronDownIcon color="#94A3B8" />}
+              p={1}
+              borderRadius="full"
+              _hover={{ bg: "rgba(255, 255, 255, 0.08)" }}
+              _active={{ bg: "rgba(255, 255, 255, 0.12)" }}
+            >
               <Avatar
                 size="sm"
                 cursor="pointer"
                 name={user.name}
                 src={user.pic}
+                border="2px solid #6366F1"
               />
             </MenuButton>
-            <MenuList>
+            <MenuList bg="rgba(15, 23, 42, 0.95)" borderColor="rgba(255, 255, 255, 0.1)">
               <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>{" "}
+                <MenuItem fontSize="xs" color="#E2E8F0">
+                  <i className="fas fa-user-circle" style={{ marginRight: "8px" }}></i>
+                  My Profile
+                </MenuItem>
               </ProfileModal>
-              <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              <MenuDivider borderColor="rgba(255, 255, 255, 0.08)" />
+              <MenuItem fontSize="xs" color="#FCA5A5" onClick={logoutHandler}>
+                <i className="fas fa-sign-out-alt" style={{ marginRight: "8px" }}></i>
+                Logout Workspace
+              </MenuItem>
             </MenuList>
           </Menu>
-        </div>
+        </Box>
       </Box>
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
-          <DrawerBody>
-            <Box display="flex" pb={2}>
+        <DrawerOverlay backdropFilter="blur(8px)" bg="rgba(0, 0, 0, 0.6)" />
+        <DrawerContent bg="rgba(11, 15, 26, 0.95)" borderRight="1px solid rgba(255, 255, 255, 0.1)">
+          <DrawerHeader borderBottomWidth="1px" borderColor="rgba(255, 255, 255, 0.08)" color="#F8FAFC" fontSize="md" fontWeight="700">
+            Search Workspace Users
+          </DrawerHeader>
+          <DrawerBody py={4}>
+            <Box display="flex" pb={4} gap={2}>
               <Input
-                placeholder="Search by name or email"
-                mr={2}
+                placeholder="Name or email..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                bg="rgba(15, 23, 42, 0.8)"
+                border="1px solid rgba(255, 255, 255, 0.1)"
+                borderRadius="12px"
+                color="#F8FAFC"
+                fontSize="xs"
+                _placeholder={{ color: "#64748B" }}
+                _focus={{ border: "1px solid #6366F1" }}
               />
-              <Button onClick={handleSearch}>Go</Button>
+              <Button
+                onClick={handleSearch}
+                bg="linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)"
+                color="white"
+                borderRadius="12px"
+                fontSize="xs"
+                px={5}
+                _hover={{ opacity: 0.9 }}
+              >
+                Go
+              </Button>
             </Box>
             {loading ? (
               <ChatLoading />
@@ -214,7 +295,7 @@ function SideDrawer() {
                 />
               ))
             )}
-            {loadingChat && <Spinner ml="auto" display="flex" />}
+            {loadingChat && <Spinner ml="auto" display="flex" color="#6366F1" mt={4} />}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

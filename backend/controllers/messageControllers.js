@@ -3,7 +3,6 @@ const Message = require("../models/messageModel");
 const User = require("../models/userModel");
 const Chat = require("../models/chatModel");
 const axios = require("axios");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 //@description     Get all Messages
 //@route           GET /api/Message/:chatId
@@ -89,7 +88,7 @@ const getScheduledMessages = asyncHandler(async (req, res) => {
 //@access          Protected
 const translateMessage = asyncHandler(async (req, res) => {
   const { content, targetLanguage } = req.body;
-  const API_KEY = "AIzaSyDrUChIZW_opEeIrEqxjVID3USTlgMt95E";
+  const API_KEY = process.env.GEMINI_API_KEY || process.env.API_KEY;
   
   console.log(`Translation request: "${content}" to ${targetLanguage}`);
   

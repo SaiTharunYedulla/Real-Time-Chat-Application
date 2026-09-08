@@ -129,34 +129,58 @@ const GroupChatModal = ({ children }) => {
     <>
       <span onClick={onOpen}>{children}</span>
 
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
-        <ModalOverlay />
-        <ModalContent>
+      <Modal onClose={onClose} isOpen={isOpen} isCentered size="md">
+        <ModalOverlay backdropFilter="blur(12px)" bg="rgba(0, 0, 0, 0.7)" />
+        <ModalContent
+          bg="rgba(15, 23, 42, 0.95)"
+          border="1px solid rgba(255, 255, 255, 0.12)"
+          borderRadius="24px"
+          color="#F8FAFC"
+          boxShadow="0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.2)"
+        >
           <ModalHeader
-            fontSize="35px"
-            fontFamily="Work sans"
-            d="flex"
+            fontSize="xl"
+            fontWeight="800"
+            display="flex"
             justifyContent="center"
+            className="gradient-text"
+            pt={5}
           >
-            Create Group Chat
+            Create New Group
           </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody d="flex" flexDir="column" alignItems="center">
+          <ModalCloseButton color="#94A3B8" borderRadius="full" />
+          <ModalBody display="flex" flexDir="column" alignItems="center" gap={3}>
             <FormControl>
               <Input
-                placeholder="Chat Name"
-                mb={3}
+                placeholder="Group Chat Title"
+                mb={2}
                 onChange={(e) => setGroupChatName(e.target.value)}
+                bg="rgba(10, 15, 26, 0.6)"
+                border="1px solid rgba(255, 255, 255, 0.1)"
+                borderRadius="14px"
+                color="#F8FAFC"
+                fontSize="sm"
+                py={5}
+                _placeholder={{ color: "#64748B" }}
+                _focus={{ border: "1px solid #6366F1" }}
               />
             </FormControl>
             <FormControl>
               <Input
-                placeholder="Add Users eg: John, Piyush, Jane"
-                mb={1}
+                placeholder="Search users to add..."
+                mb={2}
                 onChange={(e) => handleSearch(e.target.value)}
+                bg="rgba(10, 15, 26, 0.6)"
+                border="1px solid rgba(255, 255, 255, 0.1)"
+                borderRadius="14px"
+                color="#F8FAFC"
+                fontSize="sm"
+                py={5}
+                _placeholder={{ color: "#64748B" }}
+                _focus={{ border: "1px solid #6366F1" }}
               />
             </FormControl>
-            <Box w="100%" d="flex" flexWrap="wrap">
+            <Box w="100%" display="flex" flexWrap="wrap" gap={1}>
               {selectedUsers.map((u) => (
                 <UserBadgeItem
                   key={u._id}
@@ -166,8 +190,7 @@ const GroupChatModal = ({ children }) => {
               ))}
             </Box>
             {loading ? (
-              // <ChatLoading />
-              <div>Loading...</div>
+              <Box color="#94A3B8" fontSize="xs" py={2}>Searching users...</Box>
             ) : (
               searchResult
                 ?.slice(0, 4)
@@ -180,9 +203,22 @@ const GroupChatModal = ({ children }) => {
                 ))
             )}
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={handleSubmit} colorScheme="blue">
-              Create Chat
+          <ModalFooter pb={5}>
+            <Button
+              onClick={handleSubmit}
+              w="100%"
+              borderRadius="14px"
+              bg="linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)"
+              color="white"
+              fontWeight="700"
+              fontSize="sm"
+              py={5}
+              _hover={{
+                bg: "linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)",
+                boxShadow: "0 4px 15px rgba(99, 102, 241, 0.4)",
+              }}
+            >
+              Create Group
             </Button>
           </ModalFooter>
         </ModalContent>

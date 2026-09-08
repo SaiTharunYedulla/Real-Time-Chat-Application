@@ -279,93 +279,158 @@ const Signup = () => {
     }
   };
 
+  const inputStyle = {
+    bg: "rgba(10, 15, 26, 0.6)",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
+    borderRadius: "14px",
+    color: "#F8FAFC",
+    fontSize: "sm",
+    py: 5,
+    _placeholder: { color: "#64748B" },
+    _hover: { border: "1px solid rgba(99, 102, 241, 0.4)" },
+    _focus: {
+      border: "1px solid #6366F1",
+      boxShadow: "0 0 15px rgba(99, 102, 241, 0.35)",
+      bg: "rgba(15, 23, 42, 0.8)",
+    },
+    transition: "all 0.2s ease",
+  };
+
+  const labelStyle = {
+    color: "#CBD5E1",
+    fontSize: "sm",
+    fontWeight: "600",
+    mb: 1.5,
+  };
+
   return (
-    <VStack spacing="5px">
+    <VStack spacing={3}>
       <FormControl id="first-name" isRequired isInvalid={errors.name}>
-        <FormLabel>Name</FormLabel>
+        <FormLabel {...labelStyle}>Full Name</FormLabel>
         <Input
-          placeholder="Enter Your Name"
+          placeholder="John Doe"
           value={name}
           onChange={handleNameChange}
+          {...inputStyle}
         />
-        <FormErrorMessage>{errors.name}</FormErrorMessage>
+        <FormErrorMessage color="#FCA5A5" fontSize="xs">{errors.name}</FormErrorMessage>
       </FormControl>
       
       <FormControl id="username" isRequired isInvalid={errors.username}>
-        <FormLabel>Username</FormLabel>
+        <FormLabel {...labelStyle}>Username</FormLabel>
         <Input
-          placeholder="Enter Your Username"
+          placeholder="johndoe"
           value={username}
           onChange={handleUsernameChange}
+          {...inputStyle}
         />
-        <FormErrorMessage>{errors.username}</FormErrorMessage>
+        <FormErrorMessage color="#FCA5A5" fontSize="xs">{errors.username}</FormErrorMessage>
       </FormControl>
       
       <FormControl id="email" isRequired isInvalid={errors.email}>
-        <FormLabel>Email Address</FormLabel>
+        <FormLabel {...labelStyle}>Email Address</FormLabel>
         <Input
           type="email"
-          placeholder="Enter Your Email Address"
+          placeholder="john@example.com"
           value={email}
           onChange={handleEmailChange}
+          {...inputStyle}
         />
-        <FormErrorMessage>{errors.email}</FormErrorMessage>
+        <FormErrorMessage color="#FCA5A5" fontSize="xs">{errors.email}</FormErrorMessage>
       </FormControl>
       
       <FormControl id="password" isRequired isInvalid={errors.password}>
-        <FormLabel>Password</FormLabel>
+        <FormLabel {...labelStyle}>Password</FormLabel>
         <InputGroup size="md">
           <Input
             type={show ? "text" : "password"}
-            placeholder="Enter Password"
+            placeholder="••••••••••••"
             value={password}
             onChange={handlePasswordChange}
+            {...inputStyle}
           />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+          <InputRightElement width="4.5rem" h="100%" display="flex" alignItems="center">
+            <Button
+              h="1.8rem"
+              size="xs"
+              onClick={handleClick}
+              bg="rgba(255, 255, 255, 0.08)"
+              color="#94A3B8"
+              borderRadius="8px"
+              _hover={{ bg: "rgba(255, 255, 255, 0.15)", color: "#FFFFFF" }}
+            >
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
-        <FormErrorMessage>{errors.password}</FormErrorMessage>
+        <FormErrorMessage color="#FCA5A5" fontSize="xs">{errors.password}</FormErrorMessage>
       </FormControl>
       
       <FormControl id="confirm-password" isRequired isInvalid={errors.confirmpassword}>
-        <FormLabel>Confirm Password</FormLabel>
+        <FormLabel {...labelStyle}>Confirm Password</FormLabel>
         <InputGroup size="md">
           <Input
             type={show ? "text" : "password"}
-            placeholder="Confirm password"
+            placeholder="••••••••••••"
             value={confirmpassword}
             onChange={handleConfirmPasswordChange}
+            {...inputStyle}
           />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+          <InputRightElement width="4.5rem" h="100%" display="flex" alignItems="center">
+            <Button
+              h="1.8rem"
+              size="xs"
+              onClick={handleClick}
+              bg="rgba(255, 255, 255, 0.08)"
+              color="#94A3B8"
+              borderRadius="8px"
+              _hover={{ bg: "rgba(255, 255, 255, 0.15)", color: "#FFFFFF" }}
+            >
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
-        <FormErrorMessage>{errors.confirmpassword}</FormErrorMessage>
+        <FormErrorMessage color="#FCA5A5" fontSize="xs">{errors.confirmpassword}</FormErrorMessage>
       </FormControl>
       
       <FormControl id="pic">
-        <FormLabel>Upload your Picture</FormLabel>
+        <FormLabel {...labelStyle}>Profile Picture (Optional)</FormLabel>
         <Input
           type="file"
           p={1.5}
           accept="image/*"
           onChange={(e) => postDetails(e.target.files[0])}
+          bg="rgba(10, 15, 26, 0.6)"
+          border="1px dashed rgba(255, 255, 255, 0.15)"
+          borderRadius="14px"
+          color="#94A3B8"
+          fontSize="xs"
+          cursor="pointer"
+          _hover={{ border: "1px dashed rgba(99, 102, 241, 0.5)" }}
         />
       </FormControl>
       
       <Button
-        colorScheme="blue"
         width="100%"
-        style={{ marginTop: 15 }}
+        mt={3}
+        py={6}
+        borderRadius="14px"
+        bg="linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)"
+        color="#FFFFFF"
+        fontWeight="700"
+        fontSize="sm"
+        boxShadow="0 4px 20px rgba(99, 102, 241, 0.35)"
+        _hover={{
+          bg: "linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)",
+          boxShadow: "0 6px 25px rgba(99, 102, 241, 0.5)",
+          transform: "translateY(-1px)",
+        }}
+        _active={{ transform: "translateY(0)" }}
         onClick={submitHandler}
         isLoading={picLoading}
+        transition="all 0.2s ease"
       >
-        Sign Up
+        Complete Registration
       </Button>
     </VStack>
   );

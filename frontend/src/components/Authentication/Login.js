@@ -79,51 +79,119 @@ const Login = () => {
   };
 
   return (
-    <VStack spacing="10px">
+    <VStack spacing={4}>
       <FormControl id="email" isRequired>
-        <FormLabel>Email Address</FormLabel>
+        <FormLabel color="#334155" fontSize="sm" fontWeight="600" mb={1.5}>
+          Email Address
+        </FormLabel>
         <Input
-          value={email}
+          value={email || ""}
           type="email"
-          placeholder="Enter Your Email Address"
+          placeholder="name@company.com"
           onChange={(e) => setEmail(e.target.value)}
+          bg="rgba(255, 255, 255, 0.9)"
+          border="1px solid #E2E8F0"
+          borderRadius="14px"
+          color="#0F172A"
+          fontSize="sm"
+          py={5}
+          _placeholder={{ color: "#94A3B8" }}
+          _hover={{ border: "1px solid rgba(99, 102, 241, 0.4)" }}
+          _focus={{
+            border: "1px solid #4F46E5",
+            boxShadow: "0 0 15px rgba(99, 102, 241, 0.2)",
+            bg: "#FFFFFF",
+          }}
+          transition="all 0.2s ease"
         />
       </FormControl>
+
       <FormControl id="password" isRequired>
-        <FormLabel>Password</FormLabel>
+        <FormLabel color="#334155" fontSize="sm" fontWeight="600" mb={1.5}>
+          Password
+        </FormLabel>
         <InputGroup size="md">
           <Input
-            value={password}
+            value={password || ""}
             onChange={(e) => setPassword(e.target.value)}
             type={show ? "text" : "password"}
-            placeholder="Enter password"
+            placeholder="••••••••••••"
+            bg="rgba(255, 255, 255, 0.9)"
+            border="1px solid #E2E8F0"
+            borderRadius="14px"
+            color="#0F172A"
+            fontSize="sm"
+            py={5}
+            _placeholder={{ color: "#94A3B8" }}
+            _hover={{ border: "1px solid rgba(99, 102, 241, 0.4)" }}
+            _focus={{
+              border: "1px solid #4F46E5",
+              boxShadow: "0 0 15px rgba(99, 102, 241, 0.2)",
+              bg: "#FFFFFF",
+            }}
+            transition="all 0.2s ease"
           />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+          <InputRightElement width="4.5rem" h="100%" display="flex" alignItems="center">
+            <Button
+              h="1.8rem"
+              size="xs"
+              onClick={handleClick}
+              bg="rgba(241, 245, 249, 0.9)"
+              color="#64748B"
+              borderRadius="8px"
+              _hover={{ bg: "#E2E8F0", color: "#0F172A" }}
+            >
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
+
       <Button
-        colorScheme="blue"
         width="100%"
-        style={{ marginTop: 15 }}
+        mt={2}
+        py={6}
+        borderRadius="14px"
+        bg="linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)"
+        color="#FFFFFF"
+        fontWeight="700"
+        fontSize="sm"
+        boxShadow="0 4px 20px rgba(99, 102, 241, 0.3)"
+        _hover={{
+          bg: "linear-gradient(135deg, #4338CA 0%, #6D28D9 100%)",
+          boxShadow: "0 6px 25px rgba(99, 102, 241, 0.45)",
+          transform: "translateY(-1px)",
+        }}
+        _active={{ transform: "translateY(0)" }}
         onClick={submitHandler}
         isLoading={loading}
+        transition="all 0.2s ease"
       >
-        Login
+        Sign In to Workspace
       </Button>
+
       <Button
-        variant="solid"
-        colorScheme="red"
+        variant="ghost"
         width="100%"
+        py={5}
+        borderRadius="14px"
+        bg="rgba(239, 68, 68, 0.08)"
+        border="1px solid rgba(239, 68, 68, 0.2)"
+        color="#EF4444"
+        fontWeight="600"
+        fontSize="xs"
+        _hover={{
+          bg: "rgba(239, 68, 68, 0.15)",
+          color: "#DC2626",
+          border: "1px solid rgba(239, 68, 68, 0.35)",
+        }}
         onClick={() => {
           setEmail("guest@example.com");
           setPassword("123456");
         }}
+        transition="all 0.2s ease"
       >
-        Get Guest User Credentials
+        ⚡ Get Guest User Credentials
       </Button>
     </VStack>
   );

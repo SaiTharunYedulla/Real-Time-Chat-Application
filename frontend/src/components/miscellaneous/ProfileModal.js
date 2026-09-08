@@ -22,41 +22,74 @@ const ProfileModal = ({ user, children }) => {
       {children ? (
         <span onClick={onOpen}>{children}</span>
       ) : (
-        <IconButton d={{ base: "flex" }} icon={<ViewIcon />} onClick={onOpen} />
+        <IconButton
+          display={{ base: "flex" }}
+          icon={<ViewIcon color="#94A3B8" />}
+          onClick={onOpen}
+          variant="ghost"
+          borderRadius="full"
+          _hover={{ bg: "rgba(255, 255, 255, 0.1)", color: "#F8FAFC" }}
+        />
       )}
-      <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
-        <ModalOverlay />
-        <ModalContent h="410px">
+      <Modal size="md" onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay backdropFilter="blur(12px)" bg="rgba(0, 0, 0, 0.7)" />
+        <ModalContent
+          bg="rgba(15, 23, 42, 0.95)"
+          border="1px solid rgba(255, 255, 255, 0.12)"
+          borderRadius="24px"
+          color="#F8FAFC"
+          boxShadow="0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.2)"
+          py={4}
+        >
           <ModalHeader
-            fontSize="40px"
-            fontFamily="Work sans"
-            d="flex"
+            fontSize="2xl"
+            fontWeight="800"
+            display="flex"
             justifyContent="center"
+            className="gradient-text"
           >
             {user.name}
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton color="#94A3B8" borderRadius="full" />
           <ModalBody
-            d="flex"
+            display="flex"
             flexDir="column"
             alignItems="center"
-            justifyContent="space-between"
+            justifyContent="center"
+            gap={5}
+            py={4}
           >
             <Image
               borderRadius="full"
-              boxSize="150px"
+              boxSize="130px"
               src={user.pic}
               alt={user.name}
+              border="3px solid #6366F1"
+              boxShadow="0 0 25px rgba(99, 102, 241, 0.4)"
             />
             <Text
-              fontSize={{ base: "28px", md: "30px" }}
-              fontFamily="Work sans"
+              fontSize="sm"
+              color="#CBD5E1"
+              bg="rgba(255, 255, 255, 0.05)"
+              px={4}
+              py={2}
+              borderRadius="full"
+              border="1px solid rgba(255, 255, 255, 0.08)"
             >
-              Email: {user.email}
+              ✉️ {user.email}
             </Text>
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+          <ModalFooter justifyContent="center">
+            <Button
+              onClick={onClose}
+              borderRadius="full"
+              bg="rgba(255, 255, 255, 0.1)"
+              color="#F8FAFC"
+              px={8}
+              _hover={{ bg: "rgba(255, 255, 255, 0.2)" }}
+            >
+              Close
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
