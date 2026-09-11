@@ -13,12 +13,6 @@ Uses Socket.io for real time communication and stores user details in encrypted 
   
 ## Run Locally
 
-Clone the project
-
-```bash
-  git clone https://github.com/piyush-eon/mern-chat-app
-```
-
 Go to the project directory
 
 ```bash
